@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Customer-Facing API</title>
+  </head>
+  <body>
+    <h1>Customer-Facing API</h1>
+    <div id="buySection">
+      <h2>Buy</h2>
+      <button id="buyButton">Buy</button>
+    </div>
+    <div id="getAllUserBuysSection">
+      <h2>Get All User Buys</h2>
+      <form id="getAllUserBuysForm">
+        <label for="userIdInput">User ID:</label>
+        <input type="text" id="userIdInput" name="userIdInput" required>
+        <button type="submit">Get All User Buys</button>
+      </form>
+    </div>
+    <div id="payloadSection">
+      <h2>Payload</h2>
+      <pre id="payload"></pre>
+    </div>
+    <div id="responseSection">
+      <h2>Response</h2>
+      <pre id="response"></pre>
+    </div>
+    <script>
+      document.getElementById("buyButton").addEventListener("click", sendRandomPurchaseRequest);
+      document.getElementById("getAllUserBuysForm").addEventListener("submit", getAllUserBuys);
+
+      function randomString(len, charSet) {
+        charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var randomString = '';
+        for (var i = 0; i < len; i++) {
+            var randomPoz = Math.floor(Math.random() * charSet.length);
+            randomString += charSet.substring(randomPoz,randomPoz+1);
+        }
+        return randomString;
+      }
+
+      function sendRandomPurchaseRequest() {
+        var request = new XMLHttpRequest();
+        request.open("POST", "http://customer-facing-api.com/buy", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.onload = function() {
+          document.getElementById("response").innerHTML = this.responseText;
+        };
+        var data = {
+          "username": randomString(Math.floor(Math.random() * 10)),
+          "userid": String(Math.floor(Math.random() * 10000) + 1),
+          "price": Math.floor(Math.random() * 1000),
+          "timestamp": Date.now()
+        };
+        document.getElementById("payload").innerHTML = JSON.stringify(data);
+        request.send(JSON.stringify(data));
+      }
+
+      function getAllUserBuys(event) {
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        var userId = document.getElementById("userIdInput").value;
+        request.open("GET", `http://customer-facing-api.com/getAllUserBuys/${userId}`, true);
+        request.onload = function() {
+          document.getElementById("response").innerHTML = this.responseText;
+        };
+        request.send();
+      }
+    </script>
+  </body>
+</html>

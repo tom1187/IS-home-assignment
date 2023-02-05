@@ -31,11 +31,11 @@ generate YAML files from the docker-compose file and apply them
 
 ```bash
 kompose convert -f ../docker-compose.yaml
-k apply -f .
+kubectl apply -f .
 ```
 
 ### Access the Frontend 
-To access the a small complication is needed, because I'm using minikube and not hosted kubernetes.
+To access the frotnend a small complication is needed, because I'm using minikube and not hosted kubernetes.
 
 Edit the /etc/hosts file using sudo 
 ```bash

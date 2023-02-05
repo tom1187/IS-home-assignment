@@ -13,7 +13,7 @@ The home assignment contains:
 ## prerequisite
 * brew install kompose
 * brew install minikube
-minikube start --driver='hyperkit' && nminikube addons enable ingress && minikube addons enable ingress-dns
+minikube start --driver='hyperkit' && minikube addons enable ingress && minikube addons enable ingress-dns
 
 ## Installation
 
@@ -42,7 +42,7 @@ Edit the /etc/hosts file using sudo
 sudo vim /etc/hosts
 ```
 
-And the line
+And add the line
 ```bash
 127.0.0.1 customer-facing-api.com
 ```
@@ -52,7 +52,6 @@ to the end of the file
 ## Usage
 
 To access the frontend:
-to make the frontend accessbile:
 ```bash
 minikube tunnel
 kubectl port-forward service/frontend 8002:8002
